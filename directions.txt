@@ -1,0 +1,19 @@
+-if you need to change admin password run python3 manage.py changepassword <walkerpaxton>
+-if a model is changed or updated, then need to run python3 manage.py makemigrations and then python3 manage.py migrate again
+-movies.py is most of the logic for handleing the different movie descriptions and stuff
+-making new function/app
+    -do python3 manage.py startapp <appname>
+    -add appname into settings.py
+    -add to urls.py
+    -follow steps below
+    -add to show.html in whatever the app exists in
+    -add link to base.html
+
+-new button/function
+    -go to class it would be into
+    -chat html code
+    -add to models - makemigrations and migrate
+    -add to admin
+    -add to show.html
+    -add to views.py
+    -add to urls.py

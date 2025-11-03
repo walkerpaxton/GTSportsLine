@@ -31,17 +31,78 @@
         font-size: 1.5rem;
         font-weight: 600;
         letter-spacing: 1px;
+        text-decoration: none;
+        transition: opacity 0.2s ease;
+        cursor: pointer;
     }
 
-    .home-button {
+    .logo:hover {
+        opacity: 0.8;
+    }
+
+    .nav-buttons {
+        display: flex;
+        gap: 1rem;
+        align-items: center;
+    }
+
+    .nav-button {
         color: white;
         text-decoration: none;
         font-size: 1rem;
         transition: opacity 0.2s ease;
     }
 
-    .home-button:hover {
+    .nav-button:hover {
         opacity: 0.8;
+    }
+
+    .btn-login {
+        background: transparent;
+        border: 1px solid white;
+        padding: 0.5rem 1rem;
+        border-radius: 5px;
+        transition: all 0.2s ease;
+    }
+
+    .btn-login:hover {
+        background: rgba(255, 255, 255, 0.1);
+    }
+
+    .btn-signup {
+        background: #B3A369;
+        border: 1px solid #B3A369;
+        padding: 0.5rem 1rem;
+        border-radius: 5px;
+        transition: all 0.2s ease;
+    }
+
+    .btn-signup:hover {
+        background: #9A8F5E;
+        border-color: #9A8F5E;
+    }
+
+    .user-info {
+        display: flex;
+        align-items: center;
+        gap: 1rem;
+    }
+
+    .username {
+        color: white;
+        font-size: 1rem;
+    }
+
+    .btn-logout {
+        background: transparent;
+        border: 1px solid white;
+        padding: 0.5rem 1rem;
+        border-radius: 5px;
+        transition: all 0.2s ease;
+    }
+
+    .btn-logout:hover {
+        background: rgba(255, 255, 255, 0.1);
     }
 
     .container {
@@ -101,8 +162,18 @@
 </style>
 
 <div class="top-bar">
-    <div class="logo">GTSportsLine</div>
-    <a href="#" class="home-button">Home</a>
+    <a href="/" class="logo">GTSportsLine</a>
+    <div class="nav-buttons">
+        {% if user.is_authenticated %}
+        <div class="user-info">
+            <span class="username">Welcome, {{ user.username }}</span>
+            <a href="{% url 'accounts.logout' %}" class="nav-button btn-logout">Logout</a>
+        </div>
+        {% else %}
+        <a href="/accounts/login/" class="nav-button btn-login">Login</a>
+        <a href="/accounts/signup/" class="nav-button btn-signup">Sign Up</a>
+        {% endif %}
+    </div>
 </div>
 <div class="container">
     <footer>

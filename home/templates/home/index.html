@@ -1,0 +1,112 @@
+{% extends "base.html" %}
+
+{% block content %}
+<style>
+    * {
+        margin: 0;
+        padding: 0;
+        box-sizing: border-box;
+    }
+
+    body {
+        font-family: 'Poppins', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, sans-serif;
+        color: #333;
+        line-height: 1.6;
+    }
+    
+    body.bg-index {
+        min-height: 100vh;
+    }
+
+    .top-bar {
+        background: #003057;
+        padding: 1rem 2rem;
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+    }
+
+    .logo {
+        color: #B3A369;
+        font-size: 1.5rem;
+        font-weight: 600;
+        letter-spacing: 1px;
+    }
+
+    .home-button {
+        color: white;
+        text-decoration: none;
+        font-size: 1rem;
+        transition: opacity 0.2s ease;
+    }
+
+    .home-button:hover {
+        opacity: 0.8;
+    }
+
+    .container {
+        max-width: 1200px;
+        margin: 0 auto;
+        padding: 2rem;
+    }
+
+    header {
+        text-align: center;
+        padding: 3rem 0;
+    }
+
+    h1 {
+        font-size: 3rem;
+        color: #003057;
+        font-weight: 300;
+        letter-spacing: 2px;
+    }
+
+    .content {
+        background: white;
+        padding: 3rem;
+        border-radius: 8px;
+        box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+        margin-top: 2rem;
+    }
+
+    .section {
+        margin-bottom: 3rem;
+    }
+
+    .section:last-child {
+        margin-bottom: 0;
+    }
+
+    .section h2 {
+        color: #003057;
+        font-size: 1.5rem;
+        margin-bottom: 1.5rem;
+        font-weight: 400;
+        border-bottom: 2px solid #B3A369;
+        padding-bottom: 0.5rem;
+    }
+
+    .section p {
+        color: #666;
+        margin-bottom: 1rem;
+    }
+
+    footer {
+        text-align: center;
+        padding: 2rem;
+        color: #999;
+        font-size: 0.9rem;
+    }
+</style>
+
+<div class="top-bar">
+    <div class="logo">GTSportsLine</div>
+    <a href="#" class="home-button">Home</a>
+</div>
+<div class="container">
+    <footer>
+        <p>&copy; 2025 GTSportsLine</p>
+    </footer>
+</div>
+{% endblock content %}

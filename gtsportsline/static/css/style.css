@@ -1,0 +1,6 @@
+.bg-index{
+    background: url("/static/img/background.jpeg") no-repeat fixed;
+    background-size: 90%;
+    background-position: center;
+    min-height: 100vh;
+  }

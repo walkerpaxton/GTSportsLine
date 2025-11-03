@@ -105,6 +105,18 @@
         background: rgba(255, 255, 255, 0.1);
     }
 
+    .btn-news {
+        background: transparent;
+        border: 1px solid white;
+        padding: 0.5rem 1rem;
+        border-radius: 5px;
+        transition: all 0.2s ease;
+    }
+
+    .btn-news:hover {
+        background: rgba(255, 255, 255, 0.1);
+    }
+
     .container {
         max-width: 1200px;
         margin: 0 auto;
@@ -164,6 +176,7 @@
 <div class="top-bar">
     <a href="/" class="logo">GTSportsLine</a>
     <div class="nav-buttons">
+        <a href="{% url 'news.list' %}" class="nav-button btn-news">News</a>
         {% if user.is_authenticated %}
         <div class="user-info">
             <span class="username">Welcome, {{ user.username }}</span>

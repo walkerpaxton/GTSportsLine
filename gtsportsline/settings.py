@@ -16,7 +16,8 @@ import os
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
-ODDS_API_KEY = config("ODDS_API_KEY")
+ODDS_API_KEY = config("ODDS_API_KEY", default=None)
+NEWS_API_KEY = config("NEWS_API_KEY", default=None)
 
 
 # Quick-start development settings - unsuitable for production
@@ -28,7 +29,7 @@ SECRET_KEY = "django-insecure-*$pe_-%a)skb=g-m9ye!c*zku!j$97i40%6j85hevn#&-&8-(6
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = []
+ALLOWED_HOSTS = ['*']
 
 
 # Application definition

@@ -2,30 +2,39 @@
 
 {% block title %}GT News - {{ block.super }}{% endblock %}
 
-{% block extra_nav_buttons %}
-    {% if user.is_authenticated %}
-        <a href="{% url 'news.create' %}" class="nav-button btn-gold">Create Article</a>
-    {% endif %}
-{% endblock extra_nav_buttons %}
+{% block extra_nav_buttons %}{% endblock extra_nav_buttons %}
 
 {% block content %}
 <div class="container mt-4">
     <h1 class="mb-4">Georgia Tech Football News</h1>
 
+    {% if template_data.error_message %}
+        <div class="alert alert-warning" role="alert">
+            {{ template_data.error_message }}
+        </div>
+    {% endif %}
+
     {% for article in template_data.articles %}
-    <div class="card mb-3">
+    <div class="card mb-3 shadow-sm border-0">
+        {% if article.image_url %}
+            <img src="{{ article.image_url }}" class="card-img-top" alt="{{ article.title }}">
+        {% endif %}
         <div class="card-body">
             <h5 class="card-title">{{ article.title }}</h5>
             <h6 class="card-subtitle mb-2 text-muted">
-                By {{ article.author.username }} • {{ article.created_at|date:"F d, Y" }}
+                {% if article.source %}{{ article.source }}{% endif %}
+                {% if article.author %} • {{ article.author }}{% endif %}
+                {% if article.published_at %} • {{ article.published_at|date:"F d, Y g:i A" }}{% endif %}
             </h6>
-            <p class="card-text">{{ article.content|truncatewords:50 }}</p>
-            <a href="{% url 'news.detail' article.id %}" class="btn btn-primary" style="background-color: #003057; border-color: #003057;">Read More</a>
+            {% if article.description %}
+                <p class="card-text">{{ article.description }}</p>
+            {% endif %}
+            <a href="{{ article.url }}" class="btn btn-primary" style="background-color: #003057; border-color: #003057;" target="_blank" rel="noopener noreferrer">Read Full Story</a>
         </div>
     </div>
     {% empty %}
     <div class="alert alert-info" role="alert">
-        No news articles have been posted yet.
+        No Georgia Tech football stories are available right now. Please check back later.
     </div>
     {% endfor %}
 </div>

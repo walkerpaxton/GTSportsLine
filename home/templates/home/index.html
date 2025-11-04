@@ -1,122 +1,10 @@
 {% extends "base.html" %}
 
+{% block title %}Home - {{ block.super }}{% endblock %}
+
 {% block content %}
 <style>
-    * {
-        margin: 0;
-        padding: 0;
-        box-sizing: border-box;
-    }
-
-    body {
-        font-family: 'Poppins', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, sans-serif;
-        color: #333;
-        line-height: 1.6;
-    }
-    
-    body.bg-index {
-        min-height: 100vh;
-    }
-
-    .top-bar {
-        background: #003057;
-        padding: 1rem 2rem;
-        display: flex;
-        justify-content: space-between;
-        align-items: center;
-    }
-
-    .logo {
-        color: #B3A369;
-        font-size: 1.5rem;
-        font-weight: 600;
-        letter-spacing: 1px;
-        text-decoration: none;
-        transition: opacity 0.2s ease;
-        cursor: pointer;
-    }
-
-    .logo:hover {
-        opacity: 0.8;
-    }
-
-    .nav-buttons {
-        display: flex;
-        gap: 1rem;
-        align-items: center;
-    }
-
-    .nav-button {
-        color: white;
-        text-decoration: none;
-        font-size: 1rem;
-        transition: opacity 0.2s ease;
-    }
-
-    .nav-button:hover {
-        opacity: 0.8;
-    }
-
-    .btn-login {
-        background: transparent;
-        border: 1px solid white;
-        padding: 0.5rem 1rem;
-        border-radius: 5px;
-        transition: all 0.2s ease;
-    }
-
-    .btn-login:hover {
-        background: rgba(255, 255, 255, 0.1);
-    }
-
-    .btn-signup {
-        background: #B3A369;
-        border: 1px solid #B3A369;
-        padding: 0.5rem 1rem;
-        border-radius: 5px;
-        transition: all 0.2s ease;
-    }
-
-    .btn-signup:hover {
-        background: #9A8F5E;
-        border-color: #9A8F5E;
-    }
-
-    .user-info {
-        display: flex;
-        align-items: center;
-        gap: 1rem;
-    }
-
-    .username {
-        color: white;
-        font-size: 1rem;
-    }
-
-    .btn-logout {
-        background: transparent;
-        border: 1px solid white;
-        padding: 0.5rem 1rem;
-        border-radius: 5px;
-        transition: all 0.2s ease;
-    }
-
-    .btn-logout:hover {
-        background: rgba(255, 255, 255, 0.1);
-    }
-
-    .btn-news {
-        background: transparent;
-        border: 1px solid white;
-        padding: 0.5rem 1rem;
-        border-radius: 5px;
-        transition: all 0.2s ease;
-    }
-
-    .btn-news:hover {
-        background: rgba(255, 255, 255, 0.1);
-    }
-
+    /* These styles are now specific to the home page */
     .container {
         max-width: 1200px;
         margin: 0 auto;
@@ -128,7 +16,7 @@
         padding: 3rem 0;
     }
 
-    h1 {
+    header h1 {
         font-size: 3rem;
         color: #003057;
         font-weight: 300;
@@ -164,33 +52,23 @@
         color: #666;
         margin-bottom: 1rem;
     }
-
-    footer {
-        text-align: center;
-        padding: 2rem;
-        color: #999;
-        font-size: 0.9rem;
-    }
 </style>
 
-<div class="top-bar">
-    <a href="/" class="logo">GTSportsLine</a>
-    <div class="nav-buttons">
-        <a href="{% url 'news.list' %}" class="nav-button btn-news">News</a>
-        {% if user.is_authenticated %}
-        <div class="user-info">
-            <span class="username">Welcome, {{ user.username }}</span>
-            <a href="{% url 'accounts.logout' %}" class="nav-button btn-logout">Logout</a>
-        </div>
-        {% else %}
-        <a href="/accounts/login/" class="nav-button btn-login">Login</a>
-        <a href="/accounts/signup/" class="nav-button btn-signup">Sign Up</a>
-        {% endif %}
-    </div>
-</div>
 <div class="container">
-    <footer>
-        <p>&copy; 2025 GTSportsLine</p>
-    </footer>
+    <header>
+        <h1>Welcome to GTSportsLine</h1>
+    </header>
+
+    <div class="content">
+        <div class="section">
+            <h2>Latest News</h2>
+            <p>Check out the <a href="{% url 'news.list' %}">News</a> page for the latest updates on Georgia Tech athletics.</p>
+        </div>
+        
+        <div class="section">
+            <h2>Upcoming Odds</h2>
+            <p>See the latest betting lines for upcoming games on the <a href="{% url 'odds:odds_list' %}">Odds</a> page.</p>
+        </div>
+    </div>
 </div>
 {% endblock content %}

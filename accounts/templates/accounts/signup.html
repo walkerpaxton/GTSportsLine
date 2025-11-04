@@ -1,58 +1,8 @@
 {% extends 'base.html' %}
+
+{% block title %}Sign Up - {{ block.super }}{% endblock %}
+
 {% block content %}
-<style>
-    body {
-        background: white !important;
-        background-image: none !important;
-    }
-
-    .top-bar {
-        background: #003057;
-        padding: 1rem 2rem;
-        display: flex;
-        justify-content: space-between;
-        align-items: center;
-        margin-bottom: 2rem;
-    }
-
-    .logo {
-        color: #B3A369;
-        font-size: 1.5rem;
-        font-weight: 600;
-        letter-spacing: 1px;
-        text-decoration: none;
-    }
-
-    .logo:hover {
-        opacity: 0.8;
-    }
-
-    .nav-button {
-        color: white;
-        text-decoration: none;
-        font-size: 1rem;
-    }
-
-    .btn-home {
-        background: transparent;
-        border: 1px solid white;
-        padding: 0.5rem 1rem;
-        border-radius: 5px;
-        transition: all 0.2s ease;
-    }
-
-    .btn-home:hover {
-        background: rgba(255, 255, 255, 0.1);
-        color: white;
-    }
-</style>
-
-<div class="top-bar">
-  <a href="{% url 'home.index' %}" class="logo">GTSportsLine</a>
-  <div class="nav-buttons">
-      <a href="{% url 'home.index' %}" class="nav-button btn-home">Home</a>
-  </div>
-</div>
 
 <div class="p-3 mt-4">
   <div class="container">
@@ -62,6 +12,7 @@
           <div class="card-body">
             <h2>Sign Up</h2>
             <hr />
+            
             <form method="POST">
               {% csrf_token %}
               {{ template_data.form.as_p }}

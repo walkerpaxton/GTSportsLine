@@ -7,7 +7,8 @@ from django.shortcuts import get_object_or_404, redirect, render
 from django.utils.dateparse import parse_datetime
 from django.utils import timezone
 
-from .models import NewsArticle
+from .models import NewsArticle, Comment
+from .forms import CommentForm
 
 
 NEWS_API_URL = "https://newsapi.org/v2/everything"
@@ -140,6 +141,24 @@ def news_detail(request, article_id):
     }
     article = get_object_or_404(NewsArticle, id=article_id)
     template_data['article'] = article
+    
+    # Get all comments for this article
+    comments = article.comments.all()
+    template_data['comments'] = comments
+    
+    # Handle comment submission
+    if request.method == 'POST' and request.user.is_authenticated:
+        form = CommentForm(request.POST)
+        if form.is_valid():
+            comment = form.save(commit=False)
+            comment.article = article
+            comment.author = request.user
+            comment.save()
+            return redirect('news.detail', article_id=article_id)
+    else:
+        form = CommentForm()
+    
+    template_data['comment_form'] = form
     return render(request, 'news/detail.html', {'template_data': template_data})
 
 @login_required

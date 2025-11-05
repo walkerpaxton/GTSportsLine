@@ -1,4 +1,5 @@
 from django.db import models
+from django.contrib.auth.models import User
 
 class Game(models.Model):
     """
@@ -46,3 +47,16 @@ class Game(models.Model):
 
     def __str__(self):
         return f"{self.away_team} @ {self.home_team}"
+
+class BetComment(models.Model):
+    """Comments on sports bets/games that can be removed by admins if inappropriate"""
+    game = models.ForeignKey(Game, on_delete=models.CASCADE, related_name='comments')
+    author = models.ForeignKey(User, on_delete=models.CASCADE)
+    content = models.TextField(max_length=1000)
+    created_at = models.DateTimeField(auto_now_add=True)
+    
+    class Meta:
+        ordering = ['created_at']
+    
+    def __str__(self):
+        return f"Comment by {self.author.username} on {self.game}"

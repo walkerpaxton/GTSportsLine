@@ -8,4 +8,5 @@ app_name = 'odds'  # Namespacing
 urlpatterns = [
     # This makes it the root of the 'odds' app
     path('', views.odds_list_view, name='odds_list'),
+    path('<int:game_id>/', views.game_detail_view, name='game_detail'),
 ]

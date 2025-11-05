@@ -11,9 +11,11 @@
             <div class="card mb-3">
                 <div class="card-header bg-light">
                     <h4>
-                        {{ game.away_team }}
-                        <span class="text-muted">@</span>
-                        {{ game.home_team }}
+                        <a href="{% url 'odds:game_detail' game.id %}" style="text-decoration: none; color: inherit;">
+                            {{ game.away_team }}
+                            <span class="text-muted">@</span>
+                            {{ game.home_team }}
+                        </a>
                     </h4>
                     <h6 class="card-subtitle mb-2 text-muted">
                         {{ game.game_time|date:"D, M j, Y - g:i A" }}

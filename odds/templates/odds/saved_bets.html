@@ -1,10 +1,10 @@
 {% extends 'base.html' %}
 
-{% block title %}Upcoming Odds{% endblock %}
+{% block title %}Saved Bets{% endblock %}
 
 {% block content %}
 <div class="container mt-4">
-    <h1 class="mb-4">Upcoming Game Odds</h1>
+    <h1 class="mb-4">My Saved Bets</h1>
 
     {% if games %}
         {% for game in games %}
@@ -65,22 +65,20 @@
                         Odds from: <strong>{{ game.bookmaker_name }}</strong>
                         | Last Updated: {{ game.last_updated|date:"M j, g:i A" }}
                     </div>
-                    {% if user.is_authenticated %}
                     <button 
-                        class="btn btn-sm {% if game.id in saved_game_ids %}btn-warning{% else %}btn-outline-warning{% endif %} save-bet-btn" 
+                        class="btn btn-sm btn-warning save-bet-btn" 
                         data-game-id="{{ game.id }}"
-                        style="{% if game.id in saved_game_ids %}background-color: #B3A369; border-color: #B3A369;{% endif %}">
-                        <span class="save-text">{% if game.id in saved_game_ids %}Saved{% else %}Save{% endif %}</span>
+                        style="background-color: #B3A369; border-color: #B3A369;">
+                        <span class="save-text">Saved</span>
                     </button>
-                    {% endif %}
                 </div>
             </div>
         {% endfor %}
     {% else %}
         <div class="alert alert-info" role="alert">
-            No upcoming games with odds are available at this time.
+            You haven't saved any bets yet. 
             <br>
-            <small>Try running the fetch command: <code>python3 manage.py fetch_odds</code></small>
+            <small>Visit the <a href="{% url 'odds:odds_list' %}">Odds page</a> to save your favorite bets!</small>
         </div>
     {% endif %}
 </div>
@@ -93,6 +91,7 @@ document.addEventListener('DOMContentLoaded', function() {
         button.addEventListener('click', function() {
             const gameId = this.getAttribute('data-game-id');
             const span = this.querySelector('.save-text');
+            const card = this.closest('.card');
             
             fetch(`/odds/${gameId}/save/`, {
                 method: 'POST',
@@ -103,26 +102,26 @@ document.addEventListener('DOMContentLoaded', function() {
             })
             .then(response => response.json())
             .then(data => {
-                if (data.saved) {
-                    this.classList.remove('btn-outline-warning');
-                    this.classList.add('btn-warning');
-                    this.style.backgroundColor = '#B3A369';
-                    this.style.borderColor = '#B3A369';
-                    span.textContent = 'Saved';
-                } else {
-                    this.classList.remove('btn-warning');
-                    this.classList.add('btn-outline-warning');
-                    this.style.backgroundColor = '';
-                    this.style.borderColor = '';
-                    span.textContent = 'Save';
+                if (!data.saved) {
+                    // If unsaved, remove the card from the page
+                    card.style.transition = 'opacity 0.3s ease';
+                    card.style.opacity = '0';
+                    setTimeout(() => {
+                        card.remove();
+                        // Check if there are no more cards, show message
+                        if (document.querySelectorAll('.card').length === 0) {
+                            location.reload();
+                        }
+                    }, 300);
                 }
             })
             .catch(error => {
                 console.error('Error:', error);
-                alert('Please log in to save bets.');
+                alert('Error updating saved bet.');
             });
         });
     });
 });
 </script>
 {% endblock %}
+

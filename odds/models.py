@@ -60,3 +60,16 @@ class BetComment(models.Model):
     
     def __str__(self):
         return f"Comment by {self.author.username} on {self.game}"
+
+class SavedBet(models.Model):
+    """Saved bets/games by users"""
+    user = models.ForeignKey(User, on_delete=models.CASCADE, related_name='saved_bets')
+    game = models.ForeignKey(Game, on_delete=models.CASCADE, related_name='saved_by')
+    saved_at = models.DateTimeField(auto_now_add=True)
+    
+    class Meta:
+        unique_together = ['user', 'game']  # Prevent duplicate saves
+        ordering = ['-saved_at']  # Most recently saved first
+    
+    def __str__(self):
+        return f"{self.user.username} saved {self.game}"

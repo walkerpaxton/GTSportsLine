@@ -4,8 +4,16 @@
 
 {% block content %}
 <div class="container mt-4">
-    <div class="mb-3">
+    <div class="mb-3 d-flex justify-content-between align-items-center">
         <a href="{% url 'odds:odds_list' %}" class="btn btn-secondary">← Back to Odds</a>
+        {% if user.is_authenticated %}
+        <button 
+            class="btn {% if is_saved %}btn-warning{% else %}btn-outline-warning{% endif %} save-bet-btn" 
+            data-game-id="{{ game.id }}"
+            style="{% if is_saved %}background-color: #B3A369; border-color: #B3A369;{% endif %}">
+            <span class="save-text">{% if is_saved %}Saved{% else %}Save{% endif %}</span>
+        </button>
+        {% endif %}
     </div>
 
     <div class="card mb-4">
@@ -102,5 +110,46 @@
         </div>
     </div>
 </div>
+
+<script>
+document.addEventListener('DOMContentLoaded', function() {
+    const saveButton = document.querySelector('.save-bet-btn');
+    
+    if (saveButton) {
+        saveButton.addEventListener('click', function() {
+            const gameId = this.getAttribute('data-game-id');
+            const span = this.querySelector('.save-text');
+            
+            fetch(`/odds/${gameId}/save/`, {
+                method: 'POST',
+                headers: {
+                    'X-CSRFToken': document.querySelector('meta[name="csrf-token"]')?.getAttribute('content') || '{{ csrf_token }}'
+                },
+                credentials: 'same-origin'
+            })
+            .then(response => response.json())
+            .then(data => {
+                if (data.saved) {
+                    this.classList.remove('btn-outline-warning');
+                    this.classList.add('btn-warning');
+                    this.style.backgroundColor = '#B3A369';
+                    this.style.borderColor = '#B3A369';
+                    span.textContent = 'Saved';
+                } else {
+                    this.classList.remove('btn-warning');
+                    this.classList.add('btn-outline-warning');
+                    this.style.backgroundColor = '';
+                    this.style.borderColor = '';
+                    span.textContent = 'Save';
+                }
+            })
+            .catch(error => {
+                console.error('Error:', error);
+                alert('Please log in to save bets.');
+            });
+        });
+    }
+});
+</script>
 {% endblock %}
 

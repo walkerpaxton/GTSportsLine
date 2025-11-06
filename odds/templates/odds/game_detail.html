@@ -11,7 +11,11 @@
             class="btn {% if is_saved %}btn-warning{% else %}btn-outline-warning{% endif %} save-bet-btn" 
             data-game-id="{{ game.id }}"
             style="{% if is_saved %}background-color: #B3A369; border-color: #B3A369;{% endif %}">
-            <span class="save-text">{% if is_saved %}Saved{% else %}Save{% endif %}</span>
+            <a href="{% url 'odds:game_detail' game.id %}" style="text-decoration: none; color: #000757;">
+                {{ game.away_team }}
+                <span class="text-muted">@</span>
+                {{ game.home_team }}
+            </a>
         </button>
         {% endif %}
     </div>

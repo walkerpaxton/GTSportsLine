@@ -4,13 +4,8 @@
 
 {% block content %}
 <style>
-    /* These styles are now specific to the home page */
-    .container {
-        max-width: 1200px;
-        margin: 0 auto;
-        padding: 2rem;
-    }
-
+    /* We remove the hardcoded colors so Dark Mode can work */
+    
     header {
         text-align: center;
         padding: 3rem 0;
@@ -18,29 +13,13 @@
 
     header h1 {
         font-size: 3rem;
-        color: #003057;
         font-weight: 300;
         letter-spacing: 2px;
+        /* No color set here means it will be Black in Light Mode and White in Dark Mode */
     }
 
-    .content {
-        background: white;
-        padding: 3rem;
-        border-radius: 8px;
-        box-shadow: 0 2px 8px rgba(0,0,0,0.1);
-        margin-top: 2rem;
-    }
-
-    .section {
-        margin-bottom: 3rem;
-    }
-
-    .section:last-child {
-        margin-bottom: 0;
-    }
-
+    /* We keep the gold underline because it looks good on both modes */
     .section h2 {
-        color: #003057;
         font-size: 1.5rem;
         margin-bottom: 1.5rem;
         font-weight: 400;
@@ -48,26 +27,32 @@
         padding-bottom: 0.5rem;
     }
 
-    .section p {
-        color: #666;
-        margin-bottom: 1rem;
+    /* Helper class to force Navy color ONLY in light mode */
+    [data-bs-theme="light"] .text-navy-adaptive {
+        color: #003057;
     }
+    
+    /* In dark mode, we let it default to white/light gray */
 </style>
 
-<div class="container">
+<div class="container" style="max-width: 1200px;">
     <header>
-        <h1>Welcome to GTSportsLine</h1>
+        <h1 class="text-navy-adaptive">Welcome to GTSportsLine</h1>
     </header>
 
-    <div class="content">
-        <div class="section">
-            <h2>Latest News</h2>
-            <p>Check out the <a href="{% url 'news.list' %}">News</a> page for the latest updates on Georgia Tech athletics.</p>
-        </div>
-        
-        <div class="section">
-            <h2>Upcoming Odds</h2>
-            <p>See the latest betting lines for upcoming games on the <a href="{% url 'odds:odds_list' %}">Odds</a> page.</p>
+    <div class="card shadow mt-4">
+        <div class="card-body p-5">
+            
+            <div class="mb-5 section">
+                <h2 class="text-navy-adaptive">Latest News</h2>
+                <p>Check out the <a href="{% url 'news.list' %}">News</a> page for the latest updates on Georgia Tech athletics.</p>
+            </div>
+            
+            <div class="section">
+                <h2 class="text-navy-adaptive">Upcoming Odds</h2>
+                <p>See the latest betting lines for upcoming games on the <a href="{% url 'odds:odds_list' %}">Odds</a> page.</p>
+            </div>
+
         </div>
     </div>
 </div>

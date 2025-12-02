@@ -139,6 +139,7 @@
         <div class="nav-buttons">
             <a href="{% url 'news.list' %}" class="nav-button-outline">News</a>
             <a href="{% url 'odds:odds_list' %}" class="nav-button-outline">Odds</a> 
+            <a href="{% url 'schedule.list' %}" class="nav-button-outline">Schedule</a>
             
             {% if user.is_authenticated %}
             <a href="{% url 'odds:saved_bets' %}" class="nav-button-outline">Saved Bets</a>

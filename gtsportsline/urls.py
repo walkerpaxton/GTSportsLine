@@ -24,4 +24,5 @@ urlpatterns = [
     path('accounts/', include('accounts.urls')),
     path('news/', include('news.urls')),
     path('odds/', include('odds.urls')),
+    path('schedule/', include('schedule.urls')),
 ]

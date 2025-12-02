@@ -18,6 +18,7 @@ import os
 BASE_DIR = Path(__file__).resolve().parent.parent
 ODDS_API_KEY = config("ODDS_API_KEY", default=None)
 NEWS_API_KEY = config("NEWS_API_KEY", default=None)
+SCHEDULE_API_KEY = config("SCHEDULE_API_KEY", default=None)
 
 
 # Quick-start development settings - unsuitable for production
@@ -45,6 +46,7 @@ INSTALLED_APPS = [
     "accounts",
     "news",
     "odds",
+    "schedule",
 ]
 
 MIDDLEWARE = [

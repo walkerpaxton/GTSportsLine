@@ -1,0 +1,113 @@
+{% extends 'base.html' %}
+
+{% block title %}GT Schedule - {{ block.super }}{% endblock %}
+
+{% block extra_nav_buttons %}{% endblock extra_nav_buttons %}
+
+{% block content %}
+<div class="container mt-4">
+    <h1 class="mb-4">Georgia Tech Football Schedule</h1>
+
+    <!-- Year selector -->
+    <div class="mb-4">
+        <label for="year-select" class="form-label">Select Year:</label>
+        <select id="year-select" class="form-select" style="max-width: 200px;" onchange="window.location.href='?year=' + this.value">
+            {% for year in template_data.available_years %}
+                <option value="{{ year }}" {% if year == template_data.selected_year %}selected{% endif %}>
+                    {{ year }}
+                </option>
+            {% endfor %}
+        </select>
+    </div>
+
+    {% if template_data.error_message %}
+        <div class="alert alert-warning" role="alert">
+            {{ template_data.error_message }}
+        </div>
+    {% endif %}
+
+    {% if template_data.games %}
+    <div class="table-responsive">
+        <table class="table table-striped table-hover">
+            <thead class="table-dark">
+                <tr>
+                    <th>Date</th>
+                    <th>Time</th>
+                    <th>Opponent</th>
+                    <th>Location</th>
+                    <th>Result</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for game in template_data.games %}
+                <tr>
+                    <td>
+                        {% if game.game_date %}
+                            {{ game.game_date|date:"M d, Y" }}
+                        {% else %}
+                            TBD
+                        {% endif %}
+                    </td>
+                    <td>
+                        {% if game.start_time %}
+                            {{ game.start_time }}
+                        {% else %}
+                            TBD
+                        {% endif %}
+                    </td>
+                    <td>
+                        {% if game.home_team and "Georgia Tech" in game.home_team or game.home_team and "Yellow Jackets" in game.home_team %}
+                            vs {% if game.away_team %}{{ game.away_team }}{% else %}TBD{% endif %}
+                        {% elif game.home_team %}
+                            @ {{ game.home_team }}
+                        {% else %}
+                            TBD
+                        {% endif %}
+                        {% if game.conference_game %}
+                            <span class="badge bg-primary">ACC</span>
+                        {% endif %}
+                        {% if game.neutral_site %}
+                            <span class="badge bg-secondary">Neutral</span>
+                        {% endif %}
+                    </td>
+                    <td>
+                        {% if game.venue %}
+                            {{ game.venue }}
+                        {% else %}
+                            -
+                        {% endif %}
+                    </td>
+                    <td>
+                        {% if game.completed and game.home_score is not None and game.away_score is not None %}
+                            {% if game.home_team and "Georgia Tech" in game.home_team or game.home_team and "Yellow Jackets" in game.home_team %}
+                                {% if game.home_score > game.away_score %}
+                                    <span class="text-success fw-bold">W {{ game.home_score }}-{{ game.away_score }}</span>
+                                {% else %}
+                                    <span class="text-danger fw-bold">L {{ game.home_score }}-{{ game.away_score }}</span>
+                                {% endif %}
+                            {% else %}
+                                {% if game.away_score > game.home_score %}
+                                    <span class="text-success fw-bold">W {{ game.away_score }}-{{ game.home_score }}</span>
+                                {% else %}
+                                    <span class="text-danger fw-bold">L {{ game.away_score }}-{{ game.home_score }}</span>
+                                {% endif %}
+                            {% endif %}
+                        {% elif game.completed %}
+                            Final
+                        {% else %}
+                            <span class="text-muted">-</span>
+                        {% endif %}
+                    </td>
+                </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    </div>
+    {% else %}
+    <div class="alert alert-info" role="alert">
+        No schedule data available for {{ template_data.selected_year }}. Please check back later.
+    </div>
+    {% endif %}
+</div>
+{% endblock %}
+

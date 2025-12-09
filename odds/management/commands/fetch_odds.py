@@ -16,7 +16,7 @@ BOOKMAKER_KEY = 'draftkings'
 REGIONS = 'us'
 MARKETS = 'h2h,spreads,totals'
 ODDS_FORMAT = 'american'
-OUR_TEAM = 'LSU Tigers'
+OUR_TEAM = 'Georgia Tech Yellow Jackets'
 
 
 class Command(BaseCommand):
